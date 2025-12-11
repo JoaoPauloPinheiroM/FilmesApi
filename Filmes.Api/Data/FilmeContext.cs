@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 
-namespace Filmes.Api.Context;
+namespace Filmes.Api.Data;
 
 public class FilmeContext : DbContext
 {
@@ -11,4 +11,5 @@ public class FilmeContext : DbContext
 
     }
     public DbSet<Filme> Filmes { get; set; }
+    public DbSet<Cinema> Cinemas { get; set; }
 }

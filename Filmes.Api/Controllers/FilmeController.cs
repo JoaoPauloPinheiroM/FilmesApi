@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Filmes.Api.Context;
-using Filmes.Api.Context.DTos;
+using Filmes.Api.Data;
+using Filmes.Api.Data.DTos;
 using Filmes.Api.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
