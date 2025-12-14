@@ -3,6 +3,7 @@ using System;
 using Filmes.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Filmes.Api.Migrations
 {
     [DbContext(typeof(FilmeContext))]
-    partial class FilmeContextModelSnapshot : ModelSnapshot
+    [Migration("20251213213047_Filme null")]
+    partial class Filmenull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,15 +85,21 @@ namespace Filmes.Api.Migrations
 
             modelBuilder.Entity("Filmes.Api.Models.Sessao", b =>
                 {
-                    b.Property<int?>("FilmeId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int?>("CinemaId")
                         .HasColumnType("int");
 
-                    b.HasKey("FilmeId", "CinemaId");
+                    b.Property<int?>("FilmeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("CinemaId");
+
+                    b.HasIndex("FilmeId");
 
                     b.ToTable("Sessoes");
                 });
@@ -101,7 +109,7 @@ namespace Filmes.Api.Migrations
                     b.HasOne("Filmes.Api.Models.Endereco", "Endereco")
                         .WithOne("Cinema")
                         .HasForeignKey("Filmes.Api.Models.Cinema", "EnderecoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Endereco");
@@ -111,15 +119,11 @@ namespace Filmes.Api.Migrations
                 {
                     b.HasOne("Filmes.Api.Models.Cinema", "Cinema")
                         .WithMany("Sessoes")
-                        .HasForeignKey("CinemaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CinemaId");
 
                     b.HasOne("Filmes.Api.Models.Filme", "Filme")
                         .WithMany("Sessoes")
-                        .HasForeignKey("FilmeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FilmeId");
 
                     b.Navigation("Cinema");
 

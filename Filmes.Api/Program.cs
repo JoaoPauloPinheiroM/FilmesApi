@@ -2,7 +2,6 @@ using Filmes.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,7 +19,7 @@ builder.Services.AddSwaggerGen(c =>
 
 var connectionString = builder.Configuration.GetConnectionString("FilmeConnection");
 
-builder.Services.AddDbContext<FilmeContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddDbContext<FilmeContext>(options => options.UseLazyLoadingProxies().UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();

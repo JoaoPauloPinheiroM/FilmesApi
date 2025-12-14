@@ -54,9 +54,18 @@ public class FilmeController : ControllerBase
     /// <returns>An enumerable collection of film data transfer objects representing the requested page of films. The collection
     /// will be empty if no films are available for the specified range.</returns>
     [HttpGet]
-    public IEnumerable<ReadFilmeDto> ListarFilmes( [FromQuery] int skip = 0, [FromQuery] int take = 50)
+    public IEnumerable<ReadFilmeDto> ListarFilmes( [FromQuery] int skip = 0, [FromQuery] int take = 50, [FromQuery] string? nomeCinema = null)
     {
-        return _mapper.Map<List< ReadFilmeDto >>( _context.Filmes.Skip(skip).Take(take));
+        var query = _context.Filmes.AsQueryable();
+        
+        if (nomeCinema is  not null)
+        {
+            query = query.Where(filme => filme.Sessoes.Any(sessao => sessao.Cinema.Nome == nomeCinema));
+        }
+
+        query = query.Skip(skip).Take(take);
+
+        return _mapper.Map<List<ReadFilmeDto>>(query.ToList());
     }
 
     /// <summary>
